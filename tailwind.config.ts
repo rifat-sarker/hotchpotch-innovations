@@ -1,5 +1,7 @@
 import type { Config } from "tailwindcss";
 
+type PluginFunction = (utils: { addUtilities: Function }) => void;
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -15,6 +17,25 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }: {addUtilities: Function}) {
+      const newUtilities = {
+        '.text-gradient': {
+          backgroundImage: 'linear-gradient(to right, #2B59FF, #BB2BFF)',
+          WebkitBackgroundClip: 'text',
+          backgroundClip: 'text',
+          color: 'transparent',
+        },
+        '.text-gradient2': {
+          backgroundImage: 'linear-gradient(to right, #FFC947, #FC6739)',
+          WebkitBackgroundClip: 'text',
+          backgroundClip: 'text',
+          color: 'transparent',
+        },
+      };
+      
+      addUtilities(newUtilities, ['responsive', 'hover']);
+    },
+  ],
 };
 export default config;
